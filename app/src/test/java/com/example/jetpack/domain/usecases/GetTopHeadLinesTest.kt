@@ -2,6 +2,7 @@ package com.example.jetpack.domain.usecases
 
 import com.example.jetpack.domain.entities.Article
 import com.example.jetpack.domain.repositories.NewsRepository
+import io.kotest.matchers.shouldBe
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -52,20 +53,18 @@ class GetTopHeadLinesTest {
 
         //when
         runBlocking {
-            getTopHeadlines(UseCase.None(), scope = scope, onResult)
+            getTopHeadlines(UseCase.None(), scope = scope, onResult = onResult)
         }
 
         //then
         coVerify { newsRepository.getTopHeadlines() }
-        assert(result.isSuccess)
-        assert(result.getOrNull() == listOf(
-            Article(
-                id = "1",
-                title = "title",
-                description = "description",
-                urlToImage = "urlToImage",
-                publishedAt = "publishedAt"
-            )
+        result.isSuccess shouldBe true
+        result.getOrNull() shouldBe listOf(Article(
+            id = "1",
+            title = "title",
+            description = "description",
+            urlToImage = "urlToImage",
+            publishedAt = "publishedAt"
         ))
     }
 
