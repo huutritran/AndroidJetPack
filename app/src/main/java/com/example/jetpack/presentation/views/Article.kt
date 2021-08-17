@@ -39,7 +39,11 @@ class SampleArticleProvider : PreviewParameterProvider<Article> {
 @Preview
 @Composable
 fun ArticleItem(@PreviewParameter(SampleArticleProvider::class) article: Article) {
-    Row(Modifier.fillMaxWidth()) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 8.dp)
+    ) {
         Image(
             painter = rememberImagePainter(
                 data = article.urlToImage,
@@ -54,19 +58,22 @@ fun ArticleItem(@PreviewParameter(SampleArticleProvider::class) article: Article
         Column(
             Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(start = 8.dp)
         ) {
             Text(
                 text = article.title,
                 modifier = Modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h6,
+                maxLines = 2
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = article.description,
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.body2,
                 maxLines = 2
             )
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = article.publishedAt,
                 modifier = Modifier
